@@ -1,0 +1,65 @@
+﻿@model IEnumerable<GioiThieuSanPham.Models.CHITIETSANPHAM>
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="~/Content/vendor/bootstrap/css/bootstrap.min.css" type="text/css">
+
+    <title>Index</title>
+</head>
+<body>
+    <div class="container">
+        <p>
+
+            @Html.ActionLink("Create ", "Create",null,new { @class="btn btn-outline-primary"})
+
+        </p>
+        <table style="text-align:center;" class="table table-hover . table-striped table-bordered">
+
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.STT)
+                </th>
+                <th>Tên sản phẩm</th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HINHANH)
+                </th>
+
+                <th><b>CONGCU</b></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.STT)
+                    </td>
+                    <td>@Html.DisplayFor(modelItem=>item.SANPHAM.TENSANPHAM)</td>
+                    <td>
+
+                        <img class="card-img-top text-center  img-thumbnail" src="/Content/assets/images/@Html.DisplayFor(modelItem => item.HINHANH)" alt="Card image" style="width:100px;height:100px;">
+
+                    </td>
+
+                   
+                    <td>
+                        <button type="button" style="width: 73px;" class="btn btn-outline-info">  @Html.ActionLink("Edit", "Edit", new { id = item.ID })</button>
+                        <button type="button" class="btn btn-outline-info">  @Html.ActionLink("Delete", "Delete", new { id = item.ID })</button>
+
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</body>
+</html>

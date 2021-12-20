@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="QLSANPHAMModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="ACCOUNT">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EMAIL" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="MATKHAU" Type="varchar" MaxLength="50" />
+    <Property Name="TRANGTHAI" Type="bit" />
+    <Property Name="CHUADMIN" Type="bit" />
+  </EntityType>
+  <EntityType Name="CHITIETSANPHAM">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IDSANPHAM" Type="int" />
+    <Property Name="HINHANH" Type="varchar" MaxLength="50" />
+    <Property Name="STT" Type="int" />
+  </EntityType>
+  <EntityType Name="DANHMUC">
+    <Key>
+      <PropertyRef Name="MADM" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MADM" Type="int" Nullable="false" />
+    <Property Name="TEN" Type="nvarchar" MaxLength="50" />
+    <Property Name="tenkhongdau" Type="varchar" MaxLength="200" />
+    <Property Name="noibat" Type="int" />
+  </EntityType>
+  <EntityType Name="SANPHAM">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TENSANPHAM" Type="nvarchar" MaxLength="200" />
+    <Property Name="MADM" Type="int" />
+    <Property Name="HANGSX" Type="nvarchar" MaxLength="100" />
+    <Property Name="MOTA" Type="nvarchar" MaxLength="200" />
+    <Property Name="MOTA2" Type="nvarchar(max)" />
+    <Property Name="HINHDAIDIEN" Type="varchar" MaxLength="50" />
+    <Property Name="GIABAN" Type="float" />
+    <Property Name="GIAKHUYENMAI" Type="float" />
+    <Property Name="SOLUONG" Type="int" />
+    <Property Name="SANPHAMMOI" Type="bit" />
+    <Property Name="SANPHAMBANCHAY" Type="bit" />
+    <Property Name="TRANGTHAI" Type="bit" />
+    <Property Name="TENKHONGDAU" Type="varchar" MaxLength="300" />
+  </EntityType>
+  <EntityType Name="TIMHIEUSANPHAM">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MASP" Type="int" />
+    <Property Name="hoten" Type="nvarchar" MaxLength="200" />
+    <Property Name="sdt" Type="int" />
+    <Property Name="EMAIL" Type="varchar" MaxLength="200" />
+    <Property Name="NOTE" Type="nvarchar" MaxLength="200" />
+    <Property Name="NGAYTAO" Type="datetime" />
+  </EntityType>
+  <Association Name="FK_CTSANPHAM_SANPHAM">
+    <End Role="SANPHAM" Type="Self.SANPHAM" Multiplicity="0..1" />
+    <End Role="CHITIETSANPHAM" Type="Self.CHITIETSANPHAM" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SANPHAM">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CHITIETSANPHAM">
+        <PropertyRef Name="IDSANPHAM" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SP_DM">
+    <End Role="DANHMUC" Type="Self.DANHMUC" Multiplicity="0..1" />
+    <End Role="SANPHAM" Type="Self.SANPHAM" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DANHMUC">
+        <PropertyRef Name="MADM" />
+      </Principal>
+      <Dependent Role="SANPHAM">
+        <PropertyRef Name="MADM" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_THSP_SANPHAM">
+    <End Role="SANPHAM" Type="Self.SANPHAM" Multiplicity="0..1" />
+    <End Role="TIMHIEUSANPHAM" Type="Self.TIMHIEUSANPHAM" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SANPHAM">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TIMHIEUSANPHAM">
+        <PropertyRef Name="MASP" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="QLSANPHAMModelStoreContainer">
+    <EntitySet Name="ACCOUNT" EntityType="Self.ACCOUNT" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CHITIETSANPHAM" EntityType="Self.CHITIETSANPHAM" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DANHMUC" EntityType="Self.DANHMUC" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SANPHAM" EntityType="Self.SANPHAM" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TIMHIEUSANPHAM" EntityType="Self.TIMHIEUSANPHAM" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_CTSANPHAM_SANPHAM" Association="Self.FK_CTSANPHAM_SANPHAM">
+      <End Role="SANPHAM" EntitySet="SANPHAM" />
+      <End Role="CHITIETSANPHAM" EntitySet="CHITIETSANPHAM" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SP_DM" Association="Self.FK_SP_DM">
+      <End Role="DANHMUC" EntitySet="DANHMUC" />
+      <End Role="SANPHAM" EntitySet="SANPHAM" />
+    </AssociationSet>
+    <AssociationSet Name="FK_THSP_SANPHAM" Association="Self.FK_THSP_SANPHAM">
+      <End Role="SANPHAM" EntitySet="SANPHAM" />
+      <End Role="TIMHIEUSANPHAM" EntitySet="TIMHIEUSANPHAM" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

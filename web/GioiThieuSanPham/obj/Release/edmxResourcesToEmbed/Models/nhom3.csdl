@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="QLSANPHAMModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="ACCOUNT">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EMAIL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="MATKHAU" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="TRANGTHAI" Type="Boolean" />
+    <Property Name="CHUADMIN" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="DANHMUC">
+    <Key>
+      <PropertyRef Name="MADM" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MADM" Type="Int32" Nullable="false" />
+    <Property Name="TEN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="tenkhongdau" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="noibat" Type="Int32" />
+    <NavigationProperty Name="SANPHAMs" Relationship="Self.FK_SP_DM" FromRole="DANHMUC" ToRole="SANPHAM" />
+  </EntityType>
+  <EntityType Name="SANPHAM">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TENSANPHAM" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="MADM" Type="Int32" />
+    <Property Name="HANGSX" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="MOTA" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="MOTA2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="HINHDAIDIEN" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="GIABAN" Type="Double" />
+    <Property Name="GIAKHUYENMAI" Type="Double" />
+    <Property Name="SOLUONG" Type="Int32" />
+    <Property Name="SANPHAMMOI" Type="Boolean" />
+    <Property Name="SANPHAMBANCHAY" Type="Boolean" />
+    <Property Name="TRANGTHAI" Type="Boolean" />
+    <Property Name="TENKHONGDAU" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="DANHMUC" Relationship="Self.FK_SP_DM" FromRole="SANPHAM" ToRole="DANHMUC" />
+    <NavigationProperty Name="CHITIETSANPHAMs" Relationship="Self.FK_CTSANPHAM_SANPHAM" FromRole="SANPHAM" ToRole="CHITIETSANPHAM" />
+    <NavigationProperty Name="TIMHIEUSANPHAMs" Relationship="Self.FK_THSP_SANPHAM" FromRole="SANPHAM" ToRole="TIMHIEUSANPHAM" />
+  </EntityType>
+  <EntityType Name="TIMHIEUSANPHAM">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MASP" Type="Int32" />
+    <Property Name="hoten" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="sdt" Type="Int32" />
+    <Property Name="EMAIL" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="NOTE" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="NGAYTAO" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="SANPHAM" Relationship="Self.FK_THSP_SANPHAM" FromRole="TIMHIEUSANPHAM" ToRole="SANPHAM" />
+  </EntityType>
+  <EntityType Name="CHITIETSANPHAM">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IDSANPHAM" Type="Int32" />
+    <Property Name="HINHANH" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="STT" Type="Int32" />
+    <NavigationProperty Name="SANPHAM" Relationship="Self.FK_CTSANPHAM_SANPHAM" FromRole="CHITIETSANPHAM" ToRole="SANPHAM" />
+  </EntityType>
+  <Association Name="FK_SP_DM">
+    <End Role="DANHMUC" Type="Self.DANHMUC" Multiplicity="0..1" />
+    <End Role="SANPHAM" Type="Self.SANPHAM" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DANHMUC">
+        <PropertyRef Name="MADM" />
+      </Principal>
+      <Dependent Role="SANPHAM">
+        <PropertyRef Name="MADM" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CTSANPHAM_SANPHAM">
+    <End Role="SANPHAM" Type="Self.SANPHAM" Multiplicity="0..1" />
+    <End Role="CHITIETSANPHAM" Type="Self.CHITIETSANPHAM" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SANPHAM">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CHITIETSANPHAM">
+        <PropertyRef Name="IDSANPHAM" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_THSP_SANPHAM">
+    <End Role="SANPHAM" Type="Self.SANPHAM" Multiplicity="0..1" />
+    <End Role="TIMHIEUSANPHAM" Type="Self.TIMHIEUSANPHAM" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SANPHAM">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TIMHIEUSANPHAM">
+        <PropertyRef Name="MASP" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="QLSANPHAMEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="ACCOUNTs" EntityType="Self.ACCOUNT" />
+    <EntitySet Name="DANHMUCs" EntityType="Self.DANHMUC" />
+    <EntitySet Name="SANPHAMs" EntityType="Self.SANPHAM" />
+    <EntitySet Name="TIMHIEUSANPHAMs" EntityType="Self.TIMHIEUSANPHAM" />
+    <EntitySet Name="CHITIETSANPHAMs" EntityType="Self.CHITIETSANPHAM" />
+    <AssociationSet Name="FK_SP_DM" Association="Self.FK_SP_DM">
+      <End Role="DANHMUC" EntitySet="DANHMUCs" />
+      <End Role="SANPHAM" EntitySet="SANPHAMs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CTSANPHAM_SANPHAM" Association="Self.FK_CTSANPHAM_SANPHAM">
+      <End Role="SANPHAM" EntitySet="SANPHAMs" />
+      <End Role="CHITIETSANPHAM" EntitySet="CHITIETSANPHAMs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_THSP_SANPHAM" Association="Self.FK_THSP_SANPHAM">
+      <End Role="SANPHAM" EntitySet="SANPHAMs" />
+      <End Role="TIMHIEUSANPHAM" EntitySet="TIMHIEUSANPHAMs" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

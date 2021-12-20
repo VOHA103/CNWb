@@ -1,0 +1,70 @@
+﻿@model IEnumerable<GioiThieuSanPham.Models.ACCOUNT>
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+
+}
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="~/Content/vendor/bootstrap/css/bootstrap.min.css" type="text/css">
+    <title>QL_ACCOUNT</title>
+</head>
+<body>
+    <div class="container">
+        <h2>
+            <b>QL_ACCOUNT</b><br />
+
+        </h2>
+        <p>
+
+            @Html.ActionLink("Create ", "Create",null,new { @class="btn btn-outline-primary"})
+
+
+        </p>
+
+
+        <table style="text-align:center;" class="table table-hover .table-hover table-striped">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.EMAIL)
+                </th>
+                <th>
+                    Trạng thái
+                </th>
+                <th>
+                    Admin
+                </th>
+                <th>
+                    <b>Công Cụ</b>
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EMAIL)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TRANGTHAI)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CHUADMIN)
+                    </td>
+                    <td>
+                        <a class="btn btn-outline-primary" href="~/Admin/Accounts/Edit/@item.ID">Edit</a>
+                        <a class="btn btn-outline-danger" href="~/Admin/Accounts/Delete/@item.ID">Delete</a>
+
+
+                    </td>
+                </tr>
+            }
+
+        </table>
+
+    </div>
+</body>
+
+

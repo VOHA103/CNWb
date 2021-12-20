@@ -1,0 +1,62 @@
+﻿@model IEnumerable<GioiThieuSanPham.Models.TIMHIEUSANPHAM>
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+
+}
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="~/Content/vendor/bootstrap/css/bootstrap.min.css" type="text/css">
+
+    <title>TIEMHIEUSP</title>
+</head>
+<body>
+    <div class="container">
+        <h2>
+            <b>Tìm Hiểu Sản Phẩm</b><br />
+
+        </h2>
+        <table style="text-align:center;" class="table table-hover . table-striped table-bordered">
+            <tr>
+                <th>
+                 <b>EMAIL</b>
+                </th>
+                <th>
+                  <b>Ngày tạo</b>
+                </th>
+                <th>
+                  <b>Tên sản phẩm</b>
+                </th>
+                <th>
+                    <b>Công cụ</b>
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EMAIL)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NGAYTAO)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SANPHAM.TENSANPHAM)
+                    </td>
+                    <td>
+
+                        <button type="button" style="width: 73px;" class="btn btn-outline-info">@Html.ActionLink("Edit", "Edit", new { id = item.ID })</button>
+                        <button type="button" class="btn btn-outline-info"> @Html.ActionLink("Delete", "Delete", new { id = item.ID })</button>
+                    </td>
+                </tr>
+            }
+
+        </table>
+
+    </div>
+
+</body>

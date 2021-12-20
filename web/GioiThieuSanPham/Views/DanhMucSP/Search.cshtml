@@ -1,0 +1,44 @@
+﻿@model PagedList.PagedList<SANPHAM>
+@using PagedList.Mvc;
+@using GioiThieuSanPham.Models;
+@{
+    ThuVien tv = new ThuVien();
+    ViewBag.Title = "Tìm Kiếm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="row">
+                <div class="col-12 mb-5 ">
+                    <h3 class="pb-2">Nội dung tìm kiếm: @Request["search"].ToUpper()</h3>
+                </div>
+                <hr>
+                @foreach (var item in Model)
+                {
+                    <div class="col-md-3 col-lg-3 col-sm-6 item-sp">
+                        <a class="card mb-3 d-flex" style="justify-content: stretch;text-decoration: none;color:#333;" href="@item.DANHMUC.tenkhongdau/@item.TENKHONGDAU">
+                            <img class="card-img-top" src="~/Content/assets/images/@item.HINHDAIDIEN" alt="">
+                            <div class="card-body d-flex" style="flex-direction: column;">
+                                <h6 class="card-title">@item.TENSANPHAM</h6>
+                                <span class="card-text text-secondary">@item.MOTA </span>
+                                <b class="text-danger">@tv.convertVND(item.GIABAN.ToString())</b>
+                            </div>
+                        </a>
+                    </div>
+                }
+            </div>
+            Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+
+            @Html.PagedListPager(Model, page => Url.Action("Search",
+                new { page, search = Request["search"] }))
+            <!-- Kết thúc -->
+        </div>
+    </div>
+
+    </div>
+</div>
+@section scripts{
+    <script src="~/Content/assets/js/main.js"></script>
+}
+

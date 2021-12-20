@@ -1,0 +1,71 @@
+﻿@model IEnumerable<GioiThieuSanPham.Models.DANHMUC>
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+
+}
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="~/Content/vendor/bootstrap/css/bootstrap.min.css" type="text/css">
+
+    <title>Quản Lý Danh Mục</title>
+</head>
+<body>
+    <div class="container">
+        <h2>
+            <b>QL_DANHMUC</b><br />
+
+        </h2>
+        <p>
+
+            @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-outline-primary" })
+        </p>
+        <table style="text-align:center;" class="table table-hover . table-striped table-bordered">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ID)
+                </th>
+                <th>
+                    Tên danh mục
+                </th>
+                <th>
+                    <b>Nổi bật</b>
+                </th>
+                <th>
+                    <b>Công cụ</b>
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TEN)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.noibat)
+                    </td>
+                    <td>
+                        <button type="button" style="width: 73px;" class="btn btn-outline-info"> @Html.ActionLink("Edit", "Edit", new { id = item.MADM }) </button>
+                        <button type="button" class="btn btn-outline-info">@Html.ActionLink("Delete", "Delete", new { id = item.MADM })</button>
+                    </td>
+                </tr>
+            }
+
+        </table>
+
+    </div>
+
+</body>
+</html>

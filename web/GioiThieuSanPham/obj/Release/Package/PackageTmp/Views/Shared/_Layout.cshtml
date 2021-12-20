@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html lang="vi" class="h-100">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Nền tảng - Kiến thức cơ bản về WEB | Bảng tin</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Bootstrap CSS -->
+    <!-- Font awesome -->
+    <link rel="stylesheet" href="~/Content/assets/vendor/font-awesome/css/font-awesome.min.css" type="text/css">
+    <!-- Custom css - Các file css do chúng ta tự viết -->
+    @RenderSection("styles", required: false)
+    <link href="~/Content/assets/style.css" rel="stylesheet" />
+    @*<link rel="stylesheet" href="~/Content/assets/css/app.css" type="text/css">*@
+</head>
+
+<body>
+    <!-- header -->
+    @Html.Action("Navbar","Home");
+    <!-- end header -->
+    <main role="main">
+        @RenderBody()
+    </main>
+
+    <!-- footer -->
+    <footer class="footer mt-auto py-3">
+        <div class="container">
+            <span>
+                Bản quyền © bởi Nhóm 3 -
+                <script>document.write(new Date().getFullYear());</script>.
+            </span>
+            <span class="text-muted">Hành trang tới Tương lai</span>
+
+            <p class="float-right">
+                <a href="#">Về đầu trang</a>
+            </p>
+        </div>
+    </footer>
+    <!-- end footer -->
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="~/Content/assets/vendor/jquery/jquery.min.js"></script>
+    <script src="~/Content/assets/vendor/popperjs/popper.min.js"></script>
+    <script src="~/Content/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Custom script - Các file js do mình tự viết -->
+    <script src="~/Content/assets/js/app.js"></script>
+    @RenderSection("scripts", required: false)
+
+</body>
+
+</html>

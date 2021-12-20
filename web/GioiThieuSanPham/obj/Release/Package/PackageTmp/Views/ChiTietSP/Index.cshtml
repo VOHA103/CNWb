@@ -1,0 +1,147 @@
+﻿@model GioiThieuSanPham.Models.ChiTietSP
+@using GioiThieuSanPham.Models
+@{
+    ViewBag.Title = "Chi tiết sản phẩm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ThuVien tv = new ThuVien();
+}
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-md-6 col-lg-6 col-12 col-sm-12">
+            <div class="img-large">
+                <div class="carousel-container position-relative row">
+
+                    <!-- Sorry! Lightbox doesn't work - yet. -->
+
+                    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                        <div class="carousel-inner">
+                            @for (int i = 0; i < Model.lstChiTietSP.Count; i++)
+                            {
+                                if (i == 0)
+                                {
+                                    <div class="carousel-item active" data-slide-number=@i>
+                                        <img src="~/Content/assets/images/@Model.lstChiTietSP[i].HINHANH" class="d-block w-100" alt="..." data-remote="https://source.unsplash.com/Pn6iimgM-wo/" data-type="image" data-toggle="lightbox" data-gallery="example-gallery">
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="carousel-item" data-slide-number=@i>
+                                        <img src="~/Content/assets/images/@Model.lstChiTietSP[i].HINHANH" class="d-block w-100" alt="..." data-remote="https://source.unsplash.com/tXqVe7oO-go/" data-type="image" data-toggle="lightbox" data-gallery="example-gallery">
+                                    </div>
+                                }
+                            }
+
+                        </div>
+                    </div>
+
+
+                </div> <!-- /row -->
+            </div>
+            <div class="sub-img">
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-6 pl-4 col-sm-12 col-12">
+            <div class="detail-head">
+                <h3>@Model.sanPham.TENSANPHAM</h3>
+                <p class="text-secondary">@Model.sanPham.GIAKHUYENMAI</p>
+            </div>
+            <b class="text-danger" style="font-size: 25px;">@tv.convertVND(Model.sanPham.GIABAN.ToString())</b>
+            <table class="table-product">
+                <tr>
+                    <td><b>Thương hiệu:</b></td>
+                    <td>@Model.danhMuc.TEN</td>
+                </tr>
+                <tr>
+                    <td><b>Chất liệu:</b></td>
+                    <td>Kim loại</td>
+                </tr>
+                <tr>
+                    <td><b>Số lượng:</b></td>
+                    <td>@Model.sanPham.SOLUONG</td>
+                </tr>
+                <tr>
+                    <td><b>Trạng thái:</b></td>
+
+                    @if (bool.Parse(Model.sanPham.TRANGTHAI.ToString()))
+                    {
+                        <td>
+                            <b>
+                                Còn hàng
+                            </b>
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            <b>
+                                Hết hàng
+                            </b>
+                        </td>
+                    }
+
+            </tr>
+                <tr>
+                    <td><b>Mô tả:</b></td>
+                    <td>@Model.sanPham.MOTA</td>
+                </tr>
+
+            </table>
+            <a href="/" class="btn btn-primary">Trở về trang chủ</a>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+               Đặt hàng
+            </button>
+            <!-- The Modal -->
+            <div class="modal fade" id="myModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">Nhập Email</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <input class="form-control" type="text" id="txtemail" />
+                            
+                        </div>
+
+                        <!-- Modal footer -->
+                        <div class="modal-footer" style="display:flex;justify-content:space-between">
+                            <button type="button" data-id="@Model.sanPham.ID" id="btndathang" class="btn btn-success" >Xác nhận</button>
+
+                            <button type="button" id="btnclose" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5 p-2" style="border-top: 1px solid #cdcdcd;">
+        <h2 class="text-center col-12" style="margin: auto;">Giới thiệu sản phẩm</h2>
+        <div class="text-about col-12 text-center">
+            <p>@Html.Raw(Model.sanPham.MOTA2)</p>
+        </div>
+    </div>
+    <div class="row mt-5 p-2" style="border-top: 1px solid #cdcdcd;">
+        <div class="col-12">
+            <h2 class="text-center mb-5" style="margin: auto;">Sản phẩm cùng danh mục</h2>
+        </div>
+        @foreach(var item in Model.sanPhamCungDanhMuc)
+        { 
+        <div class="col-md-3 col-lg-3 col-sm-6 col-6">
+            <div class="card d-flex" style="justify-content: stretch;">
+                <img class="card-img-top" src="~/Content/assets/images/@item.HINHDAIDIEN" alt="">
+                <div class="card-body d-flex" style="flex-direction: column;">
+                    <h5 class="card-title">@item.TENSANPHAM</h5>
+                    <span class="card-text text-secondary">@item.HANGSX</span>
+                    <b class="text-danger">@tv.convertVND(Model.sanPham.GIABAN.ToString())</b>
+                </div>
+            </div>
+        </div>
+        }
+        
+    </div>
+</div>
